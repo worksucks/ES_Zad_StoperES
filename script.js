@@ -2,10 +2,13 @@ class Stopwatch extends React.Component {
     constructor(props) {
         super (props);
         this.state = {
-          running:false,
-          times: {}
+          running: false,
+          times: {
+            minutes: 0,
+            seconds: 0,
+            miliseconds: 0,
+          }
       }
-      reset()
     }
 
     reset() {
@@ -13,8 +16,8 @@ class Stopwatch extends React.Component {
     }
 
 
-    format(times) {
-        return `${pad0(times.minutes)}:${pad0(times.seconds)}:${pad0(Math.floor(times.miliseconds))}`;
+    format() {
+        return `${pad0(this.state.times.minutes)}:${pad0(this.state.times.seconds)}:${pad0(Math.floor(this.state.times.miliseconds))}`;
       }
 
     start() {
@@ -27,7 +30,6 @@ class Stopwatch extends React.Component {
     step() {
     if (!this.state.running) return;
       this.calculate();
-      this.print();
     }
 
     calculate() {
@@ -51,9 +53,10 @@ class Stopwatch extends React.Component {
 
     render() {
       return React.createElement('div', {},
-       React.createElement('p', {}, this.format(this.state.times)),
-       React.createElement('button', { onClick: this.start }, 'start'),
-       React.createElement('button', { onClick: this.stop }, 'stop')
+       React.createElement('p', {}, this.format()),
+       React.createElement('button', { onClick: () => this.start() }, 'start'),
+       React.createElement('button', { onClick: () => this.stop() }, 'stop'),
+       React.createElement('button', { onClick: () => this.reset() }, 'reset')
        );
     }
 };
